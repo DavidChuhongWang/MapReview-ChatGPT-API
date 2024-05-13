@@ -1,0 +1,19 @@
+{
+    "schema_version": "v1",
+    "name_for_human": "Perfect Places",
+    "name_for_model": "place_reviews",
+    "description_for_human": "Leverage google maps reviews to find perfect places based on your preferences",
+    "description_for_model": "You are a plugin that provides a user with relevant places based on the users preferences, their given address, city radius, and type of place. If the user does not provide this information, you can ask the user for it. To gather the user’s preferences, you may need to ask at least 1 and at most 3 clarifying questions to the user. You will have access to the top 10 places within the specified radius, sorted by their prominence and 5 reviews for each place. You will need to compare the users preferences to the reviews of the places to output the most relevant places to the user.",
+    "auth": {
+      "type": "none"
+    },
+    "api": {
+      "type": "openapi",
+      "url": "http://localhost:3333/.well-known/openapi.yaml",
+      "is_user_authenticated": false
+    },
+    "logo_url": "http://localhost:3333/logo",
+    "contact_email": "support@your-domain.com",
+    "legal_info_url": "https://www.your-domain.com/legal"
+  }
+  

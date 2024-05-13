@@ -1,0 +1,124 @@
+openapi: 3.0.1
+info:
+  title: Places Review Plugin
+  description: You are a plugin that provides a user with relevant places based on the users preferences, their given address, city radius, and type of place. If the user does not provide this information, you can ask the user for it. To gather the user’s preferences, you may need to ask at least 1 and at most 3 clarifying questions to the user. You will have access to the top 10 places within the specified radius, sorted by their prominence and 5 reviews for each place. You will need to compare the users preferences to the reviews of the places to output the most relevant places to the user.
+  version: 'v1'
+servers:
+  - url: http://localhost:3333
+paths:
+  /get_place_details/{address}/{radius}/{type}:
+    get:
+      operationId: getPlaceDetails
+      summary: Retrieve reviews of places based on address, radius, and type of place
+      parameters:
+        - in: path
+          name: address
+          schema:
+            type: string
+          required: true
+          description: The exact address string including city and zip code
+        - in: path
+          name: radius
+          schema:
+            type: integer
+          required: true
+          description: The radius (in meters). (e.g, 5, 10, 15)
+        - in: path
+          name: type
+          schema:
+            type: string
+          required: true
+          description: The type of place to search for (e.g, atm,bakery,bank,bar,cafe,clothing_store,convenience_store,department_store,electronics_store,hospital,pharmacy,restaurant,shoe_store,shopping_mall,supermarket)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the place
+                    reviews:
+                      type: array
+                      items:
+                        type: object
+                        description: The reviews for the place
+                    address:
+                      type: string
+                      description: The address of the place
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+
+
+# openapi: 3.0.1
+# info:
+#   title: Place Reviews Plugin
+#   description: A plugin that allows the user to retrieve reviews of places based on location, radius, and type using ChatGPT.
+#   version: 'v1'
+# servers:
+#   - url: http://localhost:3333
+# paths:
+#   /places:
+#     get:
+#       operationId: getPlaceReviews
+#       summary: Get reviews of places based on location, radius, and type
+#       parameters:
+#         - name: location
+#           in: query
+#           description: The latitude and longitude of the location around which to retrieve place information (e.g., "48.8588443,2.2943506").
+#           required: true
+#           schema:
+#             type: string
+#         - name: radius
+#           in: query
+#           description: The distance (in meters) within which to return place results.
+#           required: true
+#           schema:
+#             type: integer
+#         - name: type
+#           in: query
+#           description: The type of place to search for (e.g., "restaurant").
+#           required: true
+#           schema:
+#             type: string
+#       responses:
+#         "200":
+#           description: OK
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: '#/components/schemas/getPlaceReviewsResponse'
+#         "400":
+#           description: Bad Request
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: '#/components/schemas/errorResponse'
+# components:
+#   schemas:
+#     getPlaceReviewsResponse:
+#       type: object
+#       properties:
+#         reviews:
+#           type: array
+#           items:
+#             type: object
+#           description: The list of reviews for each place.
+#     errorResponse:
+#       type: object
+#       properties:
+#         error:
+#           type: string
+#           description: Error message.
